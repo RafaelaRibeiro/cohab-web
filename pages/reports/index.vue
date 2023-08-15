@@ -1,7 +1,5 @@
 <template>
-  <div class="min-h-[95vh] bg-white mt-3">
-    <slot />
-  </div>
+  <div>relatórios</div>
 </template>
 
 <script>

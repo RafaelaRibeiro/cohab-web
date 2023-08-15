@@ -20,35 +20,36 @@
       <v-form>
         <v-container>
           <v-text-field
-            placeholder="Login"
+            v-model="email"
+            placeholder="E-mail"
             prepend-inner-icon="mdi-account"
             outlined
             color="indigo darken-3"
             dense
+            @keydown.enter="signin"
           ></v-text-field>
 
           <v-text-field
+            v-model="password"
             placeholder="Senha"
             prepend-inner-icon="mdi-lock"
             outlined
+            :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
             color="indigo darken-3"
             dense
+            :type="show ? 'text' : 'password'"
+            @click:append="show = !show"
+            @keydown.enter="signin"
           ></v-text-field>
           <v-row align="center" justify="space-around">
             <v-col class="d-flex justify-center">
-              <v-btn dark block color="#042d65" elevation="4">
-                <!-- <span v-if="loading">
-                      <i class="el-icon-loading"></i> Aguarde...
-                    </span v-else>Entrar</span>
-                    <span> -->
-                <span>Entrar</span>
+              <v-btn dark block color="#042d65" elevation="4" @click="signin">
+                Entrar
               </v-btn>
             </v-col>
           </v-row>
-          <div class="text-center mt-4">
-            <button type="text" class="text-gray-800">
-              <span class="text-sm font-semibold">Esqueci minha senha</span>
-            </button>
+          <div class="text-center mt-5">
+            <span class="text-gray-600"> Esqueci minha senha</span>
           </div>
         </v-container>
       </v-form>
@@ -59,6 +60,41 @@
 <script>
 export default {
   layout: 'auth',
+  middleware: [],
+
+  data() {
+    return {
+      email: '',
+      password: '',
+      show: false,
+    }
+  },
+
+  methods: {
+    async signin() {
+      try {
+        await this.$auth.loginWith('local', {
+          data: { email: this.email, password: this.password },
+        })
+        this.$router.push('/dashboard')
+      } catch (error) {
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.error
+        ) {
+          console.log(error.response.data.message)
+          this.$toast.error(error.response.data.message, {
+            position: 'top-center',
+          })
+        } else {
+          this.$toast.error('Não foi possível conectar ao servidor.', {
+            position: 'top-center',
+          })
+        }
+      }
+    },
+  },
 }
 </script>
 

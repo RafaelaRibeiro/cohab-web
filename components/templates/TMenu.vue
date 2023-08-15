@@ -3,30 +3,29 @@
     <v-navigation-drawer
       v-model="drawer"
       :mini-variant.sync="mini"
+      mini-variant-width="70"
       permanent
       app
     >
-      <v-card flat height="10vh" class="d-flex justify-center my-4 mx-2">
+      <v-card
+        flat
+        height="10vh"
+        class="d-flex justify-center my-4 mx-2"
+        style="position: relative"
+      >
         <transition name="fade">
           <v-img
             :key="imageSource"
             :src="imageSource"
-            class="m2-3"
             contain
             alt="Logo COHAB"
           ></v-img>
         </transition>
-
-        <v-btn
-          class="top 4 right-4"
-          v-if="!mini"
-          icon
-          color="red"
-          @click.stop="toggleMini"
-        >
-          <v-icon> mdi-chevron-left </v-icon>
-        </v-btn>
+        <!-- <v-btn class="mt-4" v-if="!mini" icon @click.stop="mini = !mini">
+          <v-icon>mdi-chevron-left</v-icon>
+        </v-btn> -->
       </v-card>
+
       <v-divider class="ma-0"></v-divider>
       <el-menu
         style="padding-left: 0"
@@ -64,27 +63,33 @@ export default {
       items: [
         {
           id: '1',
+          icon: 'mdi-home',
+          title: 'Início',
+          to: '/',
+        },
+        {
+          id: '2',
           icon: 'mdi-magnify',
           title: 'Pesquisa',
           to: '/search',
         },
 
         {
-          id: '2',
+          id: '3',
           icon: 'mdi-tray-arrow-up',
           title: 'Importação',
           to: '/',
         },
 
         {
-          id: '3',
+          id: '4',
           icon: 'mdi-monitor-dashboard',
           title: 'Dashboard',
           to: '/',
           subItems: [{ id: '1-1', icon: 'mdi-account-cash', title: 'Coleta' }],
         },
         {
-          id: '4',
+          id: '5',
           icon: 'mdi-file-chart-outline',
           title: 'Relatórios',
           to: '/',

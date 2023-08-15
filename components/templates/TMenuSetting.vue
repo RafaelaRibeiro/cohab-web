@@ -1,15 +1,6 @@
 <template>
-  <v-app dark>
-    <t-header />
-    <!-- Menu -->
-
-    <!-- <v-navigation-drawer
-      v-model="drawer"
-      :mini-variant.sync="mini"
-      mini-variant-width="70"
-      permanent
-      app
-    >
+  <div>
+    <v-navigation-drawer v-model="drawer" mini-variant-width="70" permanent>
       <v-card
         flat
         height="10vh"
@@ -24,7 +15,9 @@
             alt="Logo COHAB"
           ></v-img>
         </transition>
-
+        <!-- <v-btn class="mt-4" v-if="!mini" icon @click.stop="mini = !mini">
+          <v-icon>mdi-chevron-left</v-icon>
+        </v-btn> -->
       </v-card>
 
       <v-divider class="ma-0"></v-divider>
@@ -49,61 +42,55 @@
           <span slot="title">{{ exit }}</span>
         </el-menu-item>
       </el-menu>
-    </v-navigation-drawer> -->
-
-    <v-main>
-      <v-row class="mx-3" justify="center">
-        <v-col cols="12" elevation="3">
-          <Nuxt />
-        </v-col>
-      </v-row>
-    </v-main>
-  </v-app>
+    </v-navigation-drawer>
+  </div>
 </template>
 
 <script>
-import THeader from '../components/templates/THeader.vue'
 export default {
-  name: 'DefaultLayout',
-  components: { THeader },
   data() {
     return {
       drawer: true,
-      mini: false,
+      mini: true,
 
       exit: 'Sair',
       items: [
         {
           id: '1',
-          icon: 'mdi-home-outline',
+          icon: 'mdi-home',
           title: 'Início',
           to: '/',
         },
-
         {
           id: '2',
-          icon: 'mdi-tray-arrow-up',
-          title: 'Importação',
-          to: '/upload',
+          icon: 'mdi-magnify',
+          title: 'Pesquisa',
+          to: '/search',
         },
 
         {
           id: '3',
+          icon: 'mdi-tray-arrow-up',
+          title: 'Importação',
+          to: '/',
+        },
+
+        {
+          id: '4',
           icon: 'mdi-monitor-dashboard',
           title: 'Dashboard',
-          to: '/dashboard',
+          to: '/',
           subItems: [{ id: '1-1', icon: 'mdi-account-cash', title: 'Coleta' }],
         },
         {
-          id: '4',
+          id: '5',
           icon: 'mdi-file-chart-outline',
           title: 'Relatórios',
-          to: '/reports',
+          to: '/',
         },
       ],
     }
   },
-
   computed: {
     imageSource() {
       return this.mini
@@ -120,13 +107,6 @@ export default {
 </script>
 
 <style>
-main {
-  background: #ececfc;
-}
-#app {
-  font-family: 'Poppins', sans-serif;
-}
-
 .slide-enter-active,
 .slide-leave-active {
   transition: transform 0.5s;

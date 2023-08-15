@@ -1,11 +1,16 @@
 <template>
-  <search-main />
+  <div-base class="pt-12 px-4">
+    <div class="h-1/4">
+      <search />
+    </div>
+  </div-base>
 </template>
 
 <script>
-import SearchMain from '../../components/search/SearchMain.vue'
+import DivBase from '../../components/UI/DivBase.vue'
+import Search from '../../components/UI/Search.vue'
 export default {
-  components: { SearchMain },
+  components: { Search, DivBase },
 }
 </script>
 

@@ -22,6 +22,10 @@ export default {
       },
     ],
   },
+  target: 'static',
+  router: {
+    middleware: ['auth'],
+  },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: ['@/assets/css/main.css', 'element-ui/lib/theme-chalk/index.css'],
@@ -42,12 +46,22 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    '@nuxtjs/auth-next',
+    '@nuxtjs/dotenv',
+    [
+      'vue-toastification/nuxt',
+      {
+        timeout: 3000,
+        draggable: false,
+        closeOnClick: true,
+      },
+    ],
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: '/',
+    baseURL: process.env.API_URL,
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
@@ -66,6 +80,34 @@ export default {
           success: colors.green.accent3,
         },
       },
+    },
+  },
+
+  auth: {
+    strategies: {
+      local: {
+        token: {
+          property: 'token',
+          global: true,
+          // Usar o localStorage como padrão de armazenamento do token
+        },
+
+        user: {
+          property: false,
+          endpoint: '/login/user',
+        },
+        endpoints: {
+          login: { url: '/login', method: 'post' },
+          logout: false,
+          user: { url: '/login/user', method: 'get' },
+        },
+      },
+    },
+
+    redirect: {
+      login: '/login',
+      logout: '/login',
+      home: '/dashboard',
     },
   },
 
